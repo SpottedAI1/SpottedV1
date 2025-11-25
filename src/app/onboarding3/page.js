@@ -65,7 +65,7 @@ export default function OnboardingPage3() {
           </button>
           <button
             onClick={() => {
-              router.push("/signup");
+              router.push("/after-onboarding");
             }}
             className="w-[20%] mt-6 bg-black text-white py-2 px-4 rounded-[6px] text-sm font-medium hover:opacity-90 hover:cursor-pointer flex items-center justify-center gap-1 text-[13px]"
           >
