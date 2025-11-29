@@ -1,7 +1,172 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import SideBar from "@/components/SideBar";
 
 export default function SettingsPage() {
+  const router = useRouter();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    organizationName: "",
+    role: "",
+    referralSource: ""
+  });
+  const [loading, setLoading] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    name: "",
+    organizationName: "",
+    role: "",
+    referralSource: ""
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [showReferralDropdown, setShowReferralDropdown] = useState(false);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(prevUser => ({
+          ...prevUser,
+          name: userData.name || "",
+          email: userData.email || ""
+        }));
+        
+        // Optionally fetch full user data from backend if needed
+        fetchUserDetails(userData.id || userData._id);
+      } catch (err) {
+        console.error("Error parsing user data:", err);
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchUserDetails = async (userId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:5000/api/auth/user/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(prevUser => ({
+          ...prevUser,
+          organizationName: data.user?.organizationName || "",
+          role: data.user?.role || "",
+          referralSource: data.user?.referralSource || ""
+        }));
+      }
+    } catch (err) {
+      console.error("Error fetching user details:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = () => {
+    // Clear localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("isNewUser");
+    localStorage.removeItem("onboardingData");
+    // Redirect to signin
+    router.push("/signin");
+  };
+
+  const openEditModal = () => {
+    setEditFormData({
+      name: user.name,
+      organizationName: user.organizationName,
+      role: user.role,
+      referralSource: user.referralSource
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setShowReferralDropdown(false);
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleReferralSourceSelect = (source) => {
+    setEditFormData(prev => ({
+      ...prev,
+      referralSource: source
+    }));
+  };
+
+  const handleSaveChanges = async () => {
+    setIsSaving(true);
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+      const token = localStorage.getItem("token");
+      const userId = storedUser.id || storedUser._id;
+
+      const response = await fetch(
+        `http://localhost:5000/api/auth/user/${userId}/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: editFormData.name,
+            organizationName: editFormData.organizationName,
+            role: editFormData.role,
+            referralSource: editFormData.referralSource
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(prev => ({
+          ...prev,
+          name: editFormData.name,
+          organizationName: editFormData.organizationName,
+          role: editFormData.role,
+          referralSource: editFormData.referralSource
+        }));
+        
+        // Update localStorage with new data
+        const updatedUser = JSON.parse(localStorage.getItem("user") || "{}");
+        updatedUser.name = editFormData.name;
+        updatedUser.organizationName = editFormData.organizationName;
+        updatedUser.role = editFormData.role;
+        updatedUser.referralSource = editFormData.referralSource;
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        
+        setIsEditModalOpen(false);
+        alert("Changes saved successfully!");
+      } else {
+        alert("Failed to save changes");
+      }
+    } catch (err) {
+      console.error("Error saving changes:", err);
+      alert("Error saving changes");
+    } finally {
+      setIsSaving(false);
+    }
+  };
   return (
     <main className="min-h-screen flex bg-gray-50">
       <SideBar />
@@ -29,7 +194,7 @@ export default function SettingsPage() {
                 </div>
                 <h2 className="text-xl font-semibold text-gray-900">Account Information</h2>
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50" onClick={openEditModal}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
@@ -40,19 +205,23 @@ export default function SettingsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <p className="text-gray-900">Krish Kishore</p>
+                <p className="text-gray-900">{user.name || "Not provided"}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <p className="text-gray-900">krish@gmail.com</p>
+                <p className="text-gray-900">{user.email || "Not provided"}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
-                <p className="text-gray-900">TryMania</p>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Organization Name</label>
+                <p className="text-gray-900">{user.organizationName || "Not provided"}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <p className="text-gray-900">Delhi, India</p>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                <p className="text-gray-900">{user.role || "Not provided"}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">How did you hear about us?</label>
+                <p className="text-gray-900">{user.referralSource || "Not provided"}</p>
               </div>
             </div>
           </div>
@@ -160,7 +329,7 @@ export default function SettingsPage() {
             </div>
             
             <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
+              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700" onClick={logout}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
@@ -183,6 +352,107 @@ export default function SettingsPage() {
           </a>
         </div>
       </div>
+
+      {/* Edit Info Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Edit Information</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editFormData.name}
+                  onChange={handleEditInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Organization Name</label>
+                <input
+                  type="text"
+                  name="organizationName"
+                  value={editFormData.organizationName}
+                  onChange={handleEditInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                  placeholder="Enter organization name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Role</label>
+                <select
+                  name="role"
+                  value={editFormData.role}
+                  onChange={handleEditInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                >
+                  <option value="">Select a role</option>
+                  <option value="Recruiter (In-house)">Recruiter (In-house)</option>
+                  <option value="Recruiter (Agency)">Recruiter (Agency)</option>
+                  <option value="Founder">Founder</option>
+                  <option value="Hiring Manager">Hiring Manager</option>
+                  <option value="VC Talent Team">VC Talent Team</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">How did you hear about us?</label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowReferralDropdown(!showReferralDropdown)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-left bg-white text-black hover:bg-gray-50 flex items-center justify-between"
+                  >
+                    <span>{editFormData.referralSource || "Select source"}</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </button>
+                  {showReferralDropdown && (
+                    <div className="absolute top-12 left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                      {["LinkedIn", "Twitter", "YouTube", "Instagram", "Friend", "Colleague", "Other"].map((source) => (
+                        <button
+                          key={source}
+                          onClick={() => {
+                            handleReferralSourceSelect(source);
+                            setShowReferralDropdown(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 text-black hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg"
+                        >
+                          {source}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-8">
+              <button
+                onClick={closeEditModal}
+                className="flex-1 px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveChanges}
+                disabled={isSaving}
+                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-900 disabled:opacity-50"
+              >
+                {isSaving ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

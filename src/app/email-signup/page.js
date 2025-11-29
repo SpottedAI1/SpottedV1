@@ -2,9 +2,65 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+
 export default function EmailSignupPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async () => {
+    if (!name || !email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // After successful signup, log them in
+        const loginResponse = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const loginData = await loginResponse.json();
+        if (loginResponse.ok) {
+          localStorage.setItem("token", loginData.token);
+          localStorage.setItem("user", JSON.stringify(loginData.user));
+          // Mark as new user (first-time signup) to show onboarding
+          localStorage.setItem("isNewUser", "true");
+          // New users go to onboarding to add organization
+          router.push("/onboarding1");
+        }
+      } else {
+        setError(data.message || "Signup failed. Please try again.");
+      }
+    } catch (err) {
+      setError("Network error. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-screen flex text-gray-900 bg-gray-50 items-center justify-center ">
@@ -23,12 +79,21 @@ export default function EmailSignupPage() {
           </b>
         </p>
         <div className=" w-[93%]">
+          {/* Error Message */}
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 text-[13px] rounded">
+              {error}
+            </div>
+          )}
+
           {/* Name */}
           <div className="mt-8">
             <label className="text-[13px] font-semibold">Your Full Name</label>
             <input
               type="text"
               placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full mt-1 px-[10px] py-2 border-[2px] border-[#d1d5db]  rounded-lg outline-none 
             focus:border-transparent
             focus:ring-2 focus:ring-black text-[14px] focus:bg-[#f9fafb]"
@@ -41,6 +106,8 @@ export default function EmailSignupPage() {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 px-[10px] py-2 border-[2px] border-[#d1d5db] rounded-lg outline-none focus:border-transparent
             focus:ring-2 focus:ring-black text-[14px] focus:bg-[#f9fafb]"
             />
@@ -53,6 +120,8 @@ export default function EmailSignupPage() {
               <input
                 type={!showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full mt-1 px-[10px] py-2 border-[2px] border-[#d1d5db]  rounded-lg outline-none
               focus:border-transparent
               focus:ring-2 focus:ring-black text-[14px] focus:bg-[#f9fafb] tracking-widest placeholder:tracking-normal"
@@ -82,12 +151,11 @@ export default function EmailSignupPage() {
 
           {/* Continue Button */}
           <button
-            onClick={() => {
-              router.push("/onboarding1");
-            }}
-            className="w-full mt-6 bg-black text-white py-3 rounded-lg text-sm font-medium hover:opacity-90 hover:cursor-pointer"
+            onClick={handleSignup}
+            disabled={loading}
+            className="w-full mt-6 bg-black text-white py-3 rounded-lg text-sm font-medium hover:opacity-90 hover:cursor-pointer disabled:opacity-50"
           >
-            Continue
+            {loading ? "Creating account..." : "Continue"}
           </button>
 
           {/* Terms */}
