@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-export default function ReferralSelect() {
+
+export default function ReferralSelect({ onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("");
 
@@ -14,6 +15,14 @@ export default function ReferralSelect() {
     "Colleague",
     "Other",
   ];
+
+  const handleSelect = (opt) => {
+    setSelected(opt);
+    setIsOpen(false);
+    if (onSelect) {
+      onSelect(opt);
+    }
+  };
 
   return (
     <div className="relative w-full mt-4">
@@ -54,10 +63,7 @@ export default function ReferralSelect() {
                 px-4 py-2 text-[14px] cursor-pointer text-gray-700
                 hover:bg-gray-100
               "
-              onClick={() => {
-                setSelected(opt);
-                setIsOpen(false);
-              }}
+              onClick={() => handleSelect(opt)}
             >
               {opt}
             </div>

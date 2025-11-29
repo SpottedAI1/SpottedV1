@@ -2,8 +2,42 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Roles from "@/components/Roles";
+import { useEffect, useState } from "react";
+
 export default function OnboardingPage2() {
   const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [roles] = useState([
+    "Recruiter (In-house)",
+    "Recruiter (Agency)",
+    "Founder",
+    "Hiring Manager",
+    "VC Talent Team",
+    "Other"
+  ]);
+
+  useEffect(() => {
+    // Only allow onboarding for new users (first-time signup)
+    const isNewUser = localStorage.getItem("isNewUser");
+    if (!isNewUser) {
+      // If not a new user, redirect to dashboard
+      router.push("/after-onboarding");
+    }
+  }, [router]);
+
+  const handleContinue = () => {
+    if (!selectedRole) {
+      alert("Please select a role");
+      return;
+    }
+    // Update onboarding data with role
+    const existingData = JSON.parse(localStorage.getItem("onboardingData") || "{}");
+    localStorage.setItem("onboardingData", JSON.stringify({
+      ...existingData,
+      role: selectedRole
+    }));
+    router.push("/onboarding3");
+  };
   return (
     <div className="min-h-screen w-screen flex text-gray-900 bg-white  flex-col items-center ">
       {" "}
@@ -30,12 +64,19 @@ export default function OnboardingPage2() {
           </label>
           <section className="mt-4">
             <div className="flex flex-wrap gap-3">
-              <Roles props={{ role: "Recruiter (In-house)" }} />
-              <Roles props={{ role: "Recruiter (Agency)" }} />
-              <Roles props={{ role: "Founder" }} />
-              <Roles props={{ role: "Hiring Manager" }} />
-              <Roles props={{ role: "VC Talent Team" }} />
-              <Roles props={{ role: "Other" }} />
+              {roles.map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(role)}
+                  className={`border rounded-sm text-center py-2 px-4 text-[12px] font-medium whitespace-nowrap hover:cursor-pointer transition-colors ${
+                    selectedRole === role
+                      ? "bg-[#e0e1e2] border-[#2d2d2d]"
+                      : "border-[#e5e7eb] text-[#2d2d2d]"
+                  }`}
+                >
+                  {role}
+                </button>
+              ))}
             </div>
           </section>
         </div>
@@ -56,9 +97,7 @@ export default function OnboardingPage2() {
             <p>Back</p>
           </button>
           <button
-            onClick={() => {
-              router.push("/onboarding3");
-            }}
+            onClick={handleContinue}
             className="w-[30%] mt-6 bg-black text-white py-2 px-4 rounded-[6px] text-sm font-medium hover:opacity-90 hover:cursor-pointer flex items-center justify-center gap-1 text-[13px]"
           >
             <p>Continue</p>
