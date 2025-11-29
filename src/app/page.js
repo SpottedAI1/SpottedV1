@@ -1,5 +1,4 @@
 "use client";
-import LogoSec from "@/components/LogoSec";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 export default function SignupPage() {
