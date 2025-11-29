@@ -13,20 +13,18 @@ const NavigationSec = () => {
 
   return (
     <div className="flex flex-col gap-4 px-1 mt-2">
-      <div className="flex  gap-3 ">
-        <Link
-          href="/after-onboarding"
-          className="flex  items-center gap-3 p-2 hover:bg-purple-200 rounded-lg cursor-pointer"
-        >
-          <Image
-            src="/Search.png"
-            alt="Search Candidates"
-            width={20}
-            height={20}
-          />
-          <span className="text-gray-700 truncate">Search Candidates</span>
-        </Link>
-      </div>
+      <Link
+        href="/after-onboarding"
+        className="flex  items-center gap-3 p-2 hover:bg-purple-200 rounded-lg cursor-pointer"
+      >
+        <Image
+          src="/Search.png"
+          alt="Search Candidates"
+          width={20}
+          height={20}
+        />
+        <span className="text-gray-700 truncate">Search Candidates</span>
+      </Link>
 
       <Link
         href="/ai-agents"
@@ -53,6 +51,16 @@ const NavigationSec = () => {
         <Image src="/Users.png" alt="Contacts" width={20} height={20} />
         <span className="text-gray-700">Contacts</span>
       </div>
+      <Link
+        href="/integrations"
+        className={`flex items-center gap-2 p-1
+          py-2 hover:bg-purple-200 rounded-lg cursor-pointer ${
+            pathname === "/integrations" ? "bg-purple-100" : ""
+          }`}
+      >
+        <Image src="/plug.svg" alt="plug" width={24} height={24} />
+        <span className="text-gray-700">Integrations</span>
+      </Link>
       <div className="flex items-center gap-3 p-2 hover:bg-purple-200 rounded-lg cursor-pointer">
         <Image src="/Calendar.png" alt="Calendar" width={20} height={20} />
         <span className="text-gray-700">Calendar</span>
