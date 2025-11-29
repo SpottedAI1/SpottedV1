@@ -7,15 +7,14 @@ import { usePathname } from "next/navigation";
 const NavigationSec = () => {
   //To prevent hydration error
   const [mounted, setMounted] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
-
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const pathname = usePathname();
 
   const isSettingsActive = pathname.startsWith("/settings");
   const isSubscriptionActive = pathname === "/settings/subscription";
