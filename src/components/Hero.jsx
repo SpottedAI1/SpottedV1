@@ -7,10 +7,14 @@ const Hero = () => {
   const [prompt, setPrompt] = useState();
 
   const onSearch = () => {
-    console.log('Hero onSearch called with prompt:', prompt);
+    console.log("Hero onSearch called with prompt:", prompt);
+    if (prompt === undefined || prompt.trim() === "") {
+      console.log("Prompt is empty, aborting search.");
+      return; // do not proceed if prompt is empty
+    }
     const q = encodeURIComponent(prompt.trim());
-    console.log('Encoded query:', q);
-    console.log('Navigating to:', `/search-results?q=${q}`);
+    console.log("Encoded query:", q);
+    console.log("Navigating to:", `/search-results?q=${q}`);
     router.push(`/search-results?q=${q}`); // navigate to search results page with query param
   };
 
