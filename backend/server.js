@@ -9,9 +9,9 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    'http://localhost:3000',
-    'http://localhost:5000',
-    process.env.FRONTEND_URL || 'http://localhost:3000'
+    'https://spotted-v1.vercel.app',
+    'https://spotted-v1.vercel.app',
+    process.env.FRONTEND_URL || 'https://spotted-v1.vercel.app'
   ]
 }));
 app.use(express.json());
