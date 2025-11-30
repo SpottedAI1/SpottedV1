@@ -1,6 +1,6 @@
 // API Configuration
 export const API_BASE_URL = 
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  process.env.NEXT_PUBLIC_API_URL || 'https://spottedv1-2.onrender.com';
 
 export const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/api/auth/login`,
