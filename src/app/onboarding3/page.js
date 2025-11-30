@@ -3,6 +3,7 @@ import ReferralSelect from "@/components/ReferralSources";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { API_ENDPOINTS } from "@/utils/api";
 
 export default function OnboardingPage3() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function OnboardingPage3() {
       }
 
       // Send onboarding data to backend
-      const response = await fetch("http://localhost:5000/api/auth/onboarding", {
+      const response = await fetch(API_ENDPOINTS.ONBOARDING, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
