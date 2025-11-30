@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SideBar from "@/components/SideBar";
+import { API_ENDPOINTS } from "@/utils/api";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function SettingsPage() {
   const fetchUserDetails = async (userId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/auth/user/${userId}`, {
+      const response = await fetch(API_ENDPOINTS.GET_USER(userId), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -120,9 +121,7 @@ export default function SettingsPage() {
       const token = localStorage.getItem("token");
       const userId = storedUser.id || storedUser._id;
 
-      const response = await fetch(
-        `http://localhost:5000/api/auth/user/${userId}/update`,
-        {
+      const response = await fetch(API_ENDPOINTS.UPDATE_USER(userId), {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

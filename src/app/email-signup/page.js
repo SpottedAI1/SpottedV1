@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { API_ENDPOINTS } from "@/utils/api";
 
 export default function EmailSignupPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function EmailSignupPage() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch(API_ENDPOINTS.REGISTER, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,7 @@ export default function EmailSignupPage() {
 
       if (response.ok) {
         // After successful signup, log them in
-        const loginResponse = await fetch("http://localhost:5000/api/auth/login", {
+        const loginResponse = await fetch(API_ENDPOINTS.LOGIN, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
