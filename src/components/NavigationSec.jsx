@@ -69,10 +69,10 @@ const NavigationSec = () => {
         <Image src="/plug.svg" alt="plug" width={24} height={24} />
         <span className="text-gray-700">Integrations</span>
       </Link>
-      <div className="flex items-center gap-3 p-2 hover:bg-purple-200 rounded-lg cursor-pointer">
+      {/* <div className="flex items-center gap-3 p-2 hover:bg-purple-200 rounded-lg cursor-pointer">
         <Image src="/Calendar.png" alt="Calendar" width={20} height={20} />
         <span className="text-gray-700">Calendar</span>
-      </div>
+      </div> */}
 
       {/* Settings with Dropdown */}
       <div className="relative">
