@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/SideBar";
 import { Suspense } from "react";
 
+import { data } from "../mock/candidates";
+
 export default function PageWrapper() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -20,6 +22,10 @@ function SearchResultsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [unlockedCards, setUnlockedCards] = useState(new Set());
 
+  //For pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+
   useEffect(() => {
     const query = searchParams.get("q") || "";
     setSearchQuery(query);
@@ -29,8 +35,16 @@ function SearchResultsPage() {
     }
   }, [searchParams]);
 
+  //during production set this to false to call the real APi
+  const USE_MOCK_DATA = true;
+
   const fetchResults = async (query) => {
     setLoading(true);
+    if (USE_MOCK_DATA) {
+      setResults(data);
+      return setLoading(false);
+    }
+
     try {
       const qs = encodeURIComponent(query);
       const res = await fetch(
@@ -347,29 +361,35 @@ function SearchResultsPage() {
     setUnlockedCards((prev) => new Set([...prev, cardId]));
   };
 
+  //pagination
+  const totalPages = Math.ceil(results.length / itemsPerPage);
+  const paginatedResults = results.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   return (
     <div className="h-screen bg-white overflow-hidden">
       <main className="h-full bg-white overflow-y-auto overflow-x-hidden">
         <div className="fixed left-0 top-0 h-full z-10">
           <SideBar />
         </div>
-        <div className="ml-[260px] min-h-screen pb-20 bg-white">
+        <div className="ml-[260px] min-h-screen pb-10 bg-white">
           {/* Header Section */}
           <div className="p-6 border-b border-gray-200">
             <div className="mb-4">
-              <h1 className="text-lg text-gray-800 leading-relaxed">
+              <h1 className="text-lg text-[#374151] text-[16px] px-1.5 py-2 rounded-md leading-relaxed bg-[#f8fafc] border border-[#e2e8f0] w-full">
                 {searchQuery ||
                   "Senior Product Manager with 5+ years experience in B2B SaaS, preferably from Bangalore with strong analytics background and team leadership experience"}
               </h1>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-600 ">
                 {results.length} candidates found
               </span>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Sort by:</span>
-                <select className="text-sm border-none bg-transparent text-gray-800 focus:outline-none">
+              <div className="flex items-center gap-2 px-1.5 py-1 rounded-md border border-[#e5e7eb] bg-[#f8fafc]">
+                <span className="text-sm text-gray-600  ">Sort by:</span>
+                <select className="text-sm border-none bg-transparent text-gray-800 rounded-md focus:outline-none ">
                   <option>Relevance</option>
                   <option>Experience</option>
                   <option>Location</option>
@@ -441,7 +461,8 @@ function SearchResultsPage() {
             )}
 
             <div className="space-y-4">
-              {results.map((candidate) => {
+              {/* pagination applied here */}
+              {paginatedResults.map((candidate) => {
                 const isUnlocked = unlockedCards.has(candidate.id);
                 const showLockedState = candidate.isLocked && !isUnlocked;
 
@@ -899,8 +920,49 @@ function SearchResultsPage() {
             </div>
           </div>
 
+          {/* paginatin ui */}
+          <div className="flex items-center justify-center gap-2 mt-8 mb-10">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => p - 1)}
+              className={`px-4 py-1 border rounded-md ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-800 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100 text-gray-800"
+              }`}
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentPage(num)}
+                className={`px-3 py-1 border rounded-md ${
+                  currentPage === num
+                    ? "bg-gray-800 text-white"
+                    : "bg-white hover:bg-gray-100 text-gray-600"
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => p + 1)}
+              className={`px-4 py-1 border rounded-md ${
+                currentPage === totalPages
+                  ? "bg-gray-200 text-gray-800 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100 text-gray-800"
+              }`}
+            >
+              Next
+            </button>
+          </div>
+
           {/* Sticky Footer */}
-          <div className="fixed bottom-0 left-[260px] right-0 bg-gray-800 text-white px-6 py-4 flex items-center justify-between z-30">
+          {/* <div className="fixed bottom-0 left-[260px] right-0 bg-gray-800 text-white px-6 py-4 flex items-center justify-between z-30">
             <span className="text-sm">You're on the free trial.</span>
             <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-black">
               Upgrade Now
@@ -918,7 +980,7 @@ function SearchResultsPage() {
                 />
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
       </main>
     </div>
