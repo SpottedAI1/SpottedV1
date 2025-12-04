@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/SideBar";
 import { Suspense } from "react";
 import Image from "next/image";
 
 import { data } from "../mock/candidates";
+import CandidateProfile from "@/components/CandidateProfile";
 
 export default function PageWrapper() {
   return (
@@ -326,8 +327,8 @@ function SearchResultsPage() {
           location:
             candidate.location || candidate.city || "Location Not Specified",
           education:
-            candidate.education ||
-            candidate.degree ||
+            candidate.education.degree ||
+            candidate.education.school ||
             "Education Not Specified",
           skills:
             candidate.skills ||
@@ -368,13 +369,19 @@ function SearchResultsPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  //candidate profile
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
   return (
     <div className="h-screen bg-white overflow-hidden">
       <main className="h-full bg-white overflow-y-auto overflow-x-hidden">
         <div className="fixed left-0 top-0 h-full z-10">
           <SideBar />
         </div>
-        <div className="ml-[260px] min-h-screen pb-10 bg-white">
+        <div
+          className={`ml-[260px] min-h-screen pb-10 bg-white transition-all duration-200 
+  ${selectedCandidate ? "mr-[590px]" : "mr-0"}`}
+        >
           {/* Header Section */}
           <div className="p-6 border-b border-gray-200">
             <div className="mb-4">
@@ -466,9 +473,7 @@ function SearchResultsPage() {
                         const candidateData = encodeURIComponent(
                           JSON.stringify(candidate)
                         );
-                        router.push(
-                          `/candidate/${candidate.id}?data=${candidateData}`
-                        );
+                        setSelectedCandidate(candidate);
                       }
                     }}
                   >
@@ -644,7 +649,7 @@ function SearchResultsPage() {
                                   );
                                 }
                               }}
-                              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] rounded-lg hover:bg-gray-200 border border-gray-300"
+                              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] rounded-lg hover:bg-gray-200 border border-gray-300 hover:cursor-pointer"
                             >
                               <Image
                                 src="/heart.svg"
@@ -656,7 +661,7 @@ function SearchResultsPage() {
                             </button>
                             <button
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-2 px-2.5  py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] border border-gray-300 rounded-lg hover:bg-gray-200"
+                              className="flex items-center gap-2 px-2.5  py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] border border-gray-300 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
                             >
                               <Image
                                 src="/eye.svg"
@@ -668,9 +673,7 @@ function SearchResultsPage() {
                                     const candidateData = encodeURIComponent(
                                       JSON.stringify(candidate)
                                     );
-                                    router.push(
-                                      `/candidate/${candidate.id}?data=${candidateData}`
-                                    );
+                                    setSelectedCandidate(candidate);
                                   }
                                 }}
                               />
@@ -718,7 +721,9 @@ function SearchResultsPage() {
                           width={16}
                           height={16}
                         />
-                        {candidate.education}
+                        {candidate.education.degree +
+                          " - " +
+                          candidate.education.school}
                       </div>
 
                       {/* <div className="flex items-center gap-2">
@@ -884,6 +889,12 @@ function SearchResultsPage() {
           </div> */}
         </div>
       </main>
+      {selectedCandidate && (
+        <CandidateProfile
+          props={selectedCandidate}
+          onClose={() => setSelectedCandidate(null)}
+        />
+      )}
     </div>
   );
 }

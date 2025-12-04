@@ -14,7 +14,7 @@ const CandidateProfile = ({ props, onClose }) => {
   const skillMapRef = useRef(null);
 
   return (
-    <div className=" fixed top-0 right-0 h-full w-[590px] bg-white shadow-2xl z-50 border border-[#dcdcdc] flex flex-col">
+    <div className="text-gray-900 fixed top-0 right-0 h-full w-[590px] bg-white shadow-2xl z-50 border border-[#dcdcdc] flex flex-col">
       {/* Top button secton */}
       {/* make this main sticky to the top */}
       <main className="sticky top-0 bg-white z-8">
