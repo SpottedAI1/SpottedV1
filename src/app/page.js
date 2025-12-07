@@ -14,13 +14,26 @@ import WhySpotted from "@/components/landingPage/WhySpotted";
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 const Page = () => {
+  const benefitsRef = useRef(null);
+  const featuresRef = useRef(null);
+  const pricingRef = useRef(null);
+  const faqRef = useRef(null);
+
+  const scrollToTarget = (ref) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const router = useRouter();
   return (
     <div className="min-h-screen w-full flex flex-col bg-white text-gray-900 font-geist ">
       {/* NAVIGATION BAR */}
-      <section className="px-18 pt-5 flex justify-between items-center">
+      <section
+        className="sticky top-0 bg-white/70 backdrop-blur-md z-50 px-18 pt-5 flex justify-between items-center pb-4
+      "
+      >
         {/* logo */}
         <Image
           src="/LandingPage/logo.svg"
@@ -30,16 +43,28 @@ const Page = () => {
         />
         {/* navigation */}
         <nav className="hidden md:flex w-[10%]  gap-4 text-[#222222] text-[15px] ">
-          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(benefitsRef)}
+          >
             Benefits
           </p>
-          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(featuresRef)}
+          >
             Features
           </p>
-          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(pricingRef)}
+          >
             Pricing
           </p>
-          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(faqRef)}
+          >
             FAQ
           </p>
         </nav>
@@ -76,15 +101,35 @@ const Page = () => {
       </section>
       <Hero />
       <LogoScroll />
-      <Benefits />
-      <Features />
+      <div ref={benefitsRef}>
+        <Benefits />
+      </div>
+      <div ref={featuresRef}>
+        <Features />
+      </div>
       <WhySpotted />
       <Testimonials />
-      <Pricing />
+      <div ref={pricingRef}>
+        <Pricing />
+      </div>
       <Blog />
-      <FAQ />
+      <div ref={faqRef}>
+        <FAQ />
+      </div>
+
       <AllInOne />
       <Footer />
+      <div className="fixed bottom-0 left-0 right-0 h-40 pointer-events-none z-40">
+        <div
+          className="w-full h-full backdrop-blur-xl"
+          style={{
+            maskImage:
+              "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, transparent 100%)",
+          }}
+        />
+      </div>
     </div>
   );
 };

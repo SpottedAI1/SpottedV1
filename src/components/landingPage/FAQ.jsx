@@ -13,8 +13,8 @@ const FAQ = () => {
             Everything You Need to Know - Upfront
           </p>
           <p className="text-[16px]">
-            From setup to support and pricing, here are quick answert to the
-            most common questions we get from teams considering Spotted AI
+            From setup to support and pricing, here are quick answer to the most
+            common questions we get from teams considering Spotted AI
           </p>
         </nav>
         <nav
@@ -78,7 +78,7 @@ const FAQ = () => {
          hover:cursor-pointer hover:px-6 transition-all duration-200
         "
         >
-          <p>Where does Spotted AI get candidate form,and is it compliant?</p>
+          <p>Where does Spotted AI get candidate from,and is it compliant?</p>
           <div className="p-3 rounded-[6px] hover:cursor-pointer hover:bg-white border border-[#f2f2f2]">
             <Image
               src="/LandingPage/plus.svg"
@@ -123,7 +123,7 @@ const FAQ = () => {
          hover:cursor-pointer hover:px-6 transition-all duration-200
         "
         >
-          <p>How is pricing structred, and what are "unlock credits"?</p>
+          <p>How is pricing structured, and what are "unlock credits"?</p>
           <div className="p-3 rounded-[6px] hover:cursor-pointer hover:bg-white border border-[#f2f2f2]">
             <Image
               src="/LandingPage/plus.svg"

@@ -46,7 +46,7 @@ const Pricing = () => {
                 per month
               </p>
               <p className=" text-[14px] mb-13">
-                For founders and small tems hiring their first few roles fast.
+                For founders and small teams hiring their first few roles fast.
               </p>
               <button className="w-full text-center py-2 border border-black bg-black hover:bg-gray-800 rounded-[6px] hover:cursor-pointer text-white text-[14px]">
                 Get Started
@@ -57,7 +57,7 @@ const Pricing = () => {
               <li>Up to 2 active roles at a time</li>
               <li>AI-driven shortlisting and outreach automation</li>
               <li>250 "unlock credits" to reveal verified contact details</li>
-              <li>1 recruiter / fonder seat</li>
+              <li>1 recruiter / founder seat</li>
               <li>Access to 500M+ global profiles</li>
             </ul>
           </nav>
@@ -88,7 +88,7 @@ const Pricing = () => {
               <li>Up to 5 active roles at a time</li>
               <li>Up to 3 recruiter seats</li>
               <li>800 "unlock credits" to reveal candidate details</li>
-              <li>AI-driven shortlisting and outreact automation</li>
+              <li>AI-driven shortlisting and outreach automation</li>
               <li>Access to 500M+ global profiles</li>
               <li>Priority support & onboarding assistance</li>
             </ul>
@@ -109,7 +109,7 @@ const Pricing = () => {
             </div>
             <p className="text-[16px] mb-3">What's included?</p>
             <ul className="list-disc text-[#646464] text-[16px] ml-6 space-y-1">
-              <li>6+ active reoles and custom recruiter seats</li>
+              <li>6+ active roles and custom recruiter seats</li>
               <li>Unlimited "unlock credits" & bulk data access</li>
               <li>Dedicated account manager</li>
             </ul>
@@ -127,7 +127,7 @@ const Pricing = () => {
                 per year
               </p>
               <p className=" text-[14px] mb-13">
-                For founders and small tems hiring their first few roles fast.
+                For founders and small teams hiring their first few roles fast.
               </p>
               <button className="w-full text-center py-2 border border-black bg-black hover:bg-gray-800 rounded-[6px] hover:cursor-pointer text-white text-[14px]">
                 Get Started
@@ -138,7 +138,7 @@ const Pricing = () => {
               <li>Up to 2 active roles at a time</li>
               <li>AI-driven shortlisting and outreach automation</li>
               <li>3000 "unlock credits" to reveal verified contact details</li>
-              <li>1 recruiter / fonder seat</li>
+              <li>1 recruiter / founder seat</li>
               <li>Access to 500M+ global profiles</li>
             </ul>
           </nav>
@@ -169,7 +169,7 @@ const Pricing = () => {
               <li>Up to 5 active roles at a time</li>
               <li>Up to 3 recruiter seats</li>
               <li>9600 "unlock credits" to reveal candidate details</li>
-              <li>AI-driven shortlisting and outreact automation</li>
+              <li>AI-driven shortlisting and outreach automation</li>
               <li>Access to 500M+ global profiles</li>
               <li>Priority support & onboarding assistance</li>
             </ul>
@@ -190,7 +190,7 @@ const Pricing = () => {
             </div>
             <p className="text-[16px] mb-3">What's included?</p>
             <ul className="list-disc text-[#646464] text-[16px] ml-6 space-y-1">
-              <li>6+ active reoles and custom recruiter seats</li>
+              <li>6+ active roles and custom recruiter seats</li>
               <li>Unlimited "unlock credits" & bulk data access</li>
               <li>Dedicated account manager</li>
             </ul>

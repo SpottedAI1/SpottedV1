@@ -14,7 +14,7 @@ const AllInOne = () => {
             Book Better Candidates Faster.
           </p>
           <p className="text-[16px] mb-5 text-[#cccccc]">
-            Spotted Ai automates sourcing, shortlisting, and outreach so your
+            Spotted AI automates sourcing, shortlisting, and outreach so your
             team spends time interviewing-not searching for candidates.
           </p>
           <div className="flex w-[270px] gap-3">
