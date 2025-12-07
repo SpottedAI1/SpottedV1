@@ -1,40 +1,92 @@
 "use client";
+
+import AllInOne from "@/components/landingPage/AllInOne";
+import Benefits from "@/components/landingPage/Benefits";
+import Blog from "@/components/landingPage/Blog";
+import FAQ from "@/components/landingPage/FAQ";
+import Features from "@/components/landingPage/Features";
+import Footer from "@/components/landingPage/Footer";
+import Hero from "@/components/landingPage/Hero";
+import LogoScroll from "@/components/landingPage/LogoScroll";
+import Pricing from "@/components/landingPage/Pricing";
+import Testimonials from "@/components/landingPage/Testimonials";
+import WhySpotted from "@/components/landingPage/WhySpotted";
 import Image from "next/image";
+import React from "react";
 import { useRouter } from "next/navigation";
-export default function SignupPage() {
+
+const Page = () => {
   const router = useRouter();
   return (
-    <div className="min-h-screen w-screen flex text-gray-900 bg-gray-50 items-center justify-center ">
-      <main className="text-center w-[400px] flex   items-center justify-center flex-col">
-        {/* <LogoSec /> */}
-        <div className="flex items-center gap-2   py-3 mb-[22px]">
-          <Image src="/Icon.png" alt="Spotted" width={28} height={28} />
-          <h1 className="font-bold text-[19px] text-black ">Spotted AI</h1>
-        </div>
-        <h1 className="font-sans font-semibold text-[18px] text-gray-800 mb-[20px]">
-          Get started for free
-        </h1>
-        <button className="w-full border-[2px] border-[#cfcfcf] rounded-[4px] py-[10px] text-[13px]  flex items-center justify-center gap-2 mb-[8px] hover:cursor-pointer font-semibold text-gray-800">
-          <Image src="/google.svg" alt="google" width={18} height={18} />
-          Continue with Google
-        </button>
-        <button
-          onClick={() => {
-            router.push("/email-signup");
-          }}
-          className="w-full border-[2px] border-[#cfcfcf] rounded-[4px] py-[10px] text-[13px]  flex items-center justify-center gap-2 mb-[18px] hover:cursor-pointer font-semibold text-gray-800"
-        >
-          <Image src="/email.svg" alt="google" width={18} height={18} />
-          Continue with Email
-        </button>
-        <nav className="text-[#4d4d4d] text-[10px] flex gap-1">
-          <p>By proceeding, you agree to our </p>{" "}
-          <p className="underline decoration-[#dbdbdb] hover:cursor-pointer">
-            {" "}
-            Terms of Service
+    <div className="min-h-screen w-full flex flex-col bg-white text-gray-900 font-geist ">
+      {/* NAVIGATION BAR */}
+      <section className="px-18 pt-5 flex justify-between items-center">
+        {/* logo */}
+        <Image
+          src="/LandingPage/logo.svg"
+          width={160}
+          height={160}
+          alt="logo"
+        />
+        {/* navigation */}
+        <nav className="hidden md:flex w-[10%]  gap-4 text-[#222222] text-[15px] ">
+          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+            Benefits
+          </p>
+          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+            Features
+          </p>
+          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+            Pricing
+          </p>
+          <p className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer">
+            FAQ
           </p>
         </nav>
-      </main>
+        {/* action buttons */}
+        <nav className="flex gap-2">
+          <button
+            className="w-[154px] text-center py-2 border border-[#f2f2f2] hover:bg-gray-50 rounded-[6px] hover:cursor-pointer "
+            onClick={() => router.push("/signup")}
+          >
+            Sign in
+          </button>
+          {/* <button className="w-[154px] text-center py-2 border border-black bg-black hover:bg-gray-800 rounded-[6px] hover:cursor-pointer text-white">
+            Start Hiring Now
+          </button> */}
+          <button
+            className="  
+              w-[154px] py-2 text-center
+              bg-black text-white 
+              border border-black 
+              rounded-[6px]
+              transition-all duration-300
+    
+            hover:bg-white hover:text-black
+              
+              hover:-translate-x-[4px]
+              hover:-translate-y-[4px]
+              
+              hover:shadow-[4px_4px_0px_#000]
+              hover: cursor-pointer"
+          >
+            Start Hiring Now
+          </button>
+        </nav>
+      </section>
+      <Hero />
+      <LogoScroll />
+      <Benefits />
+      <Features />
+      <WhySpotted />
+      <Testimonials />
+      <Pricing />
+      <Blog />
+      <FAQ />
+      <AllInOne />
+      <Footer />
     </div>
   );
-}
+};
+
+export default Page;

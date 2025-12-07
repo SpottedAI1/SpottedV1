@@ -25,6 +25,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* fonts */
+.font-geist {
+  font-family: var(--font-geist-sans);
+}
+
+.font-geist-mono {
+  font-family: var(--font-geist-mono);
+}
+
 /* Hide scrollbar but keep scroll functional */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -33,4 +42,20 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-animation {
+  display: inline-flex;
+  animation: infinite-scroll 18s linear infinite;
+  animation-delay: -3s;
+  will-change: transform;
 }
