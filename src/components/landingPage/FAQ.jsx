@@ -16,34 +16,33 @@ const FAQ = () => {
       question:
         " How does the Spotted AI agent learn what “good” looks like for each role?",
       answer: `
-              For every role, you start by writing a natural-language brief (e.g., “Senior Product Manager in Austin, B2B SaaS, PLG experience”).
-              Spotted AI then shows you five highly relevant, similar profiles. You quickly approve or reject them, and the agent uses that feedback to learn your exact preferences—skills, background, seniority, and signals you care about.
-              After this human-guided training loop, the agent starts shortlisting and running outreach on its own, continuously improving as more feedback comes in.`,
+              For every role, you start by writing a natural-language brief (e.g., “Senior Product Manager in Austin, B2B SaaS, PLG experience”). Spotted AI then shows you five highly relevant, similar profiles. You quickly approve or reject them, and the agent uses that feedback to learn your exact preferences—skills, background, seniority, and signals you care about. After this human-guided training loop, the agent starts shortlisting and running outreach on its own, continuously improving as more feedback comes in.`,
     },
     {
       question:
         "Where does Spotted AI get candidate data from, and is it compliant?",
-      answer: `Spotted AI works on top of a large pool of publicly available and partner-provided professional data to help recruiters find relevant, verified profiles.The platform is designed with privacy and compliance in mind, and we focus on using professional information for legitimate recruitment purposes only. As you adopt Spotted AI, your legal team can map it to your existing processes for GDPR/CCPA and internal data-handling policies.`,
+      answer: `Spotted AI works on top of a large pool of publicly available and partner-provided professional data to help recruiters find relevant, verified profiles. The platform is designed with privacy and compliance in mind, and we focus on using professional information for legitimate recruitment purposes only. As you adopt Spotted AI, your legal team can map it to your existing processes for GDPR/CCPA and internal data-handling policies.`,
     },
     {
-      question: "Which roles and locations does Spotted AI work best for",
+      question: "Which roles and locations does Spotted AI work best for?",
       answer: `Spotted AI is built for modern hiring teams recruiting knowledge-worker roles—including engineering, product, design, data, GTM, and operations. It works especially well for companies hiring globally with a focus on major tech hubs like San Francisco, New York, Austin, Seattle, and other high-density talent markets. As long as the role has a clear professional profile online, Spotted AI can help you find and engage the right candidates faster.`,
     },
     {
       question:
         "       Do we need complex integrations to get value from Spotted AI?",
-      answer: `No.You can get value from Spotted AI on day one without changing your existing stack.
+      answer: `No. You can get value from Spotted AI on day one without changing your existing stack.
                 Recruiters can start by:
-                1. Creating a role
+                
+                1.  Creating a role
                 2. Training the agent with the 5 profile review
                 3. Letting the agent shortlist and run outreach
+                
                 ATS/CRM integrations can be added later to sync candidates, stages, and interviews—but they’re not required to see faster sourcing and more interviews booked.`,
     },
     {
       question: "How is pricing structured, and what are “unlock credits”?",
       answer: `Spotted AI pricing is designed around hiring volume and automation, not seats alone.
-                Each plan includes:
-                A number of active roles Recruiter seats A pool of “unlock credits” that let you reveal full candidate profiles and verified contact details.This model keeps pricing simple and predictable for hiring teams: you only pay for real, usable candidate data and automation that moves searches toward booked interviews.`,
+                Each plan includes a number of active roles Recruiter seats A pool of “unlock credits” that let you reveal full candidate profiles and verified contact details.This model keeps pricing simple and predictable for hiring teams: you only pay for real, usable candidate data and automation that moves searches toward booked interviews.`,
     },
   ];
   return (
