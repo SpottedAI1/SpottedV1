@@ -106,19 +106,18 @@ const Footer = () => {
               Press
             </li>
           </ul>
-          <nav>
+          <nav className="w-full">
             <p className="text-[14px] font-medium">
               Subscribe to our newsletter
             </p>
-            <div className="flex gap-2">
+            <div className=" flex gap-2">
               <input
                 type="email"
                 placeholder="Email Address"
-                className="border border-[#f2f2f2] bg-white py-3 pl-4 rounded-[8px]"
+                className="border border-[#f2f2f2] bg-white py-2 pl-4 rounded-[8px] w-[100%] text-[14px]"
               />
               <button
-                className="px-6 py-3 bg-black text-white rounded-[8px] border border-black hover:cursor-pointer
-              
+                className="w-[50%] py-2 bg-black text-white rounded-[8px] border border-black hover:cursor-pointer text-[14px]
               
                transition-all duration-300
         

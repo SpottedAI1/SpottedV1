@@ -1,7 +1,8 @@
 import Image from "next/image";
 import React from "react";
-
+import { useRouter } from "next/navigation";
 function WhySpotted() {
+  const router = useRouter();
   return (
     <section className="mt-30 px-15 py-25 flex gap-2 bg-gray-50 items-center">
       <nav className="w-[678px]">
@@ -64,6 +65,7 @@ function WhySpotted() {
                   
                   hover:shadow-[4px_4px_0px_#000]
                   hover: cursor-pointer"
+          onClick={() => router.push("/signup")}
         >
           See Spotted AI in Action
         </button>
