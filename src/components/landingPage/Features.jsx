@@ -3,7 +3,8 @@ import React from "react";
 
 const Features = () => {
   return (
-    <section className="mt-20 px-15   flex gap-2 flex-col ">
+    // px-15
+    <section className=" mt-20 w-[90%]  flex gap-2 flex-col ">
       <p className="font-geist-mono">/ FEATURES</p>
       <nav className="flex justify-between items-center mb-4">
         <p className="font-semibold text-[40px] leading-[46px] mb-4">
@@ -27,14 +28,15 @@ const Features = () => {
           All Features
         </button>
       </nav>
-      <nav className="grid grid-cols-[472px_472px_472px] grid-rows-2 w-full gap-2">
-        <div className="row-span-3 w-[472px] ">
+      <nav className="grid grid-cols-[1fr_1fr_1fr] grid-rows-2 w-full gap-2">
+        <div className="row-span-3  ">
           <Image
             src="/LandingPage/man.svg"
             alt="man"
             width={130}
             height={130}
-            className="w-[472px] "
+            // className="w-[472px] "
+            className="w-[100%]"
           />
         </div>
         <div className="flex px-4 pt-3 flex-col bg-gray-50 h-auto rounded-[4px]">

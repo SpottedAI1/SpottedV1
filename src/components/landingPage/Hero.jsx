@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const Hero = () => {
+  const router = useRouter();
   return (
     <section className="mb-20 px-15 mt-15 flex gap-2 items-center">
       {/* hero texts */}
@@ -11,7 +13,7 @@ const Hero = () => {
         <p className="text-[56px] font-semibold leading-[61px] mb-6">
           AI recruiting that delivers interview ready candidates
         </p>
-        <p className="text-[16px] text-[#333333]">
+        <p className=" text-[16px] text-[#333333]">
           Spotted AI automates candidate sourcing, shortlisting and outreach so
           recruiters meet only pre-qualified, high-intent, interview-ready
           talent.
@@ -35,6 +37,7 @@ const Hero = () => {
                   
                   hover:shadow-[4px_4px_0px_#000]
                   hover: cursor-pointer"
+            onClick={() => router.push("/signup")}
           >
             Start Hiring Now
           </button>

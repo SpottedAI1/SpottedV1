@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import React from "react";
-
+import { useRouter } from "next/navigation";
 const AllInOne = () => {
+  const router = useRouter();
   return (
     <div className=" mb-20 mx-15   flex gap-2 flex-col bg-black text-white rounded-[4px]">
       <main className="px-10 flex justify-between items-center py-8">
@@ -18,7 +20,10 @@ const AllInOne = () => {
             team spends time interviewing-not searching for candidates.
           </p>
           <div className="flex w-[270px] gap-3">
-            <button className="w-full text-center py-3 border border-white bg-white hover:bg-gray-50 rounded-[6px] hover:cursor-pointer text-black text-[14px] font-medium">
+            <button
+              className="w-full text-center py-3 border border-white bg-white hover:bg-gray-50 rounded-[6px] hover:cursor-pointer text-black text-[14px] font-medium "
+              onClick={() => router.push("/signup")}
+            >
               Get Started
             </button>
             <button className="w-full text-center py-3 border  bg-black hover:bg-gray-800 rounded-[6px] hover:cursor-pointer text-white text-[14px]  border-white">
