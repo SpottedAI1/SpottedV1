@@ -26,8 +26,15 @@ const AllInOne = () => {
             >
               Get Started
             </button>
+
             <button className="w-full text-center py-3 border  bg-black hover:bg-gray-800 rounded-[6px] hover:cursor-pointer text-white text-[14px]  border-white">
-              Book a Demo
+              <a
+                href="https://calendly.com/iamkrishkishore/spottedai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a Demo
+              </a>
             </button>
           </div>
         </section>

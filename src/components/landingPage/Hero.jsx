@@ -42,7 +42,13 @@ const Hero = () => {
             Start Hiring Now
           </button>
           <button className="w-[168px] text-center py-2 border border-[#f2f2f2] hover:bg-gray-50 rounded-[6px] hover:cursor-pointer ">
-            Book a Demo
+            <a
+              href="https://calendly.com/iamkrishkishore/spottedai"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a Demo
+            </a>
           </button>
         </div>
       </nav>
