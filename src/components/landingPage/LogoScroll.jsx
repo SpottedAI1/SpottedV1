@@ -17,8 +17,8 @@ const LogoScroll = () => {
   ];
 
   return (
-    <section className="px-15 flex gap-2 items-center flex-col mb-12">
-      <p className=" w-full text-center text-[18px]">
+    <section className=" px-5 md:px-15 flex md:gap-2 items-center flex-col mb-12">
+      <p className=" w-full text-center text-[20px] md:text-[18px] leading-[30px]">
         Built for recruiters who hire at the world's most innovative companies
       </p>
       <div className="overflow-hidden whitespace-nowrap w-full">
@@ -31,7 +31,7 @@ const LogoScroll = () => {
               alt={`logo-${i}`}
               width={150}
               height={150}
-              className="w-30 h-30 mx-12 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              className="w-30 h-30 mx-8 md:mx-12 opacity-70 hover:opacity-100 transition-opacity duration-300"
             />
           ))}
 
@@ -43,7 +43,7 @@ const LogoScroll = () => {
               alt={`logo-${i}`}
               width={150}
               height={150}
-              className="w-30 h-30 mx-12 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              className="w-30 h-30 mx-8 md:mx-12 opacity-70 hover:opacity-100 transition-opacity duration-300"
             />
           ))}
         </div>

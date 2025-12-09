@@ -3,20 +3,39 @@ import React from "react";
 
 const Blog = () => {
   return (
-    <div className="mt-45 mb-50 px-15   flex gap-2 flex-col  ">
+    <div className="mt-45 mb-25 md:mb-50 px-5 md:px-15   flex gap-2 flex-col  ">
       <p className="font-geist-mono mb-1">/ BLOG</p>
-      <p className="font-semibold text-[40px] leading-[46px] mb-10">
-        Product Updates & Insights
-      </p>
-      <section className="grid grid-cols-3 gap-6 ">
+      <nav className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4 ">
+        <p className="font-semibold text-[40px] leading-[46px] ">
+          Product Updates & Insights
+        </p>
+        <button
+          className="w-[110px] py-3 text-center
+                  bg-black text-white 
+                  border border-black 
+                  rounded-[6px]
+                  transition-all duration-300
+                  text-[14px] md:text-[16px]
+                hover:bg-white hover:text-black
+                  
+                  hover:-translate-x-[4px]
+                  hover:-translate-y-[4px]
+                  
+                  hover:shadow-[4px_4px_0px_#000]
+                  hover: cursor-pointer"
+        >
+          All Posts
+        </button>
+      </nav>
+      <section className="grid md:grid-cols-3 grid-cols-[1fr] gap-6 ">
         <nav className="bg-[#f7f7f7] overflow-hidden hover:cursor-pointer">
-          <div className="overflow-hidden rounded-[8px] h-[314px]">
+          <div className="overflow-hidden rounded-[8px] md:h-[314px]">
             <Image
               src="/LandingPage/stone3.svg"
               alt="stone"
               width={20}
               height={20}
-              className="w-[470px] h-[314px]  
+              className="w-[470px] md:h-[314px]  
              transition-transform duration-200 ease-out hover:scale-105 "
             />
           </div>
@@ -45,7 +64,7 @@ const Blog = () => {
               alt="stone"
               width={20}
               height={20}
-              className="w-[470px] h-[314px] transition-transform duration-200 ease-out hover:scale-105 "
+              className="w-[470px] md:h-[314px] transition-transform duration-200 ease-out hover:scale-105 "
             />
           </div>
           <div className="px-3 pb-2 ">
@@ -73,7 +92,7 @@ const Blog = () => {
               alt="stone"
               width={20}
               height={20}
-              className="w-[470px] h-[314px] transition-transform duration-200 ease-out hover:scale-105 "
+              className="w-[470px] md:h-[314px] transition-transform duration-200 ease-out hover:scale-105 "
             />
           </div>
           <div className="px-3 pb-2 rounded-b-[8px]">

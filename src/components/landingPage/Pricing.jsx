@@ -3,12 +3,14 @@ import React, { useState } from "react";
 const Pricing = () => {
   const [monthly, setMonthly] = useState(true);
   return (
-    <section className="bg-[#fafafa] px-15  flex gap-2 flex-col pt-[96px] pb-10 items-center">
+    <section className="bg-[#fafafa] px-5 md:px-15  flex gap-2 flex-col pt-[50px] md:pt-[96px] pb-10 items-center">
       <p className="font-geist-mono mb-1 ">/ PRICING</p>
-      <p className="font-semibold text-[40px] leading-[46px]  ">
+      <p className="font-semibold text-[38px] md:text-[40px] leading-[46px] text-center mb-[10px] md:mb-0">
         Simple, Scalable Pricing for Modern Hiring Teams
       </p>
-      <p className="text-[16px]">Choose a plan that fits your hiring volume</p>
+      <p className="text-[16px] mb-3 md:mb-0">
+        Choose a plan that fits your hiring volume
+      </p>
       <div className="bg-[#f5f5f5] p-1 rounded-[12px] mt-1 mb-5">
         <button
           className={`w-[100px] h-[40px] rounded-[10px] font-semibold text-[14px] transition-all duration-300
@@ -35,7 +37,7 @@ const Pricing = () => {
         </button>
       </div>
       {monthly ? (
-        <section className="grid grid-cols-3 gap-2">
+        <section className="grid grid-cols-[1fr] md:grid-cols-3 md:gap-2 gap-13">
           <nav>
             <div className="px-4 py-6 bg-white rounded-[6px] mb-6">
               <p className="text-[20px] font-semibold mb-4">Starter</p>
@@ -116,7 +118,7 @@ const Pricing = () => {
           </nav>
         </section>
       ) : (
-        <section className="grid grid-cols-3 gap-2">
+        <section className="grid grid-cols-[1fr] md:grid-cols-3 md:gap-2 gap-13">
           <nav>
             <div className="px-4 py-6 bg-white rounded-[6px] mb-6">
               <p className="text-[20px] font-semibold mb-4">Starter</p>

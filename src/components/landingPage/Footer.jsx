@@ -4,11 +4,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-gray-50 px-20 pt-20">
-      <nav className="mb-30 flex gap-30">
+    <div className="bg-gray-50 px-5 md:px-20 pt-20">
+      <nav className="mb-20 md:mb-30 flex flex-col md:flex-row md:gap-30 gap-10">
         <section className="w-[220px]">
-          <p className="font-geist-mono text-[16px]">PRODUCT</p>
-          <ul className="mt-8 ">
+          <p className="font-geist-mono  text-[16px]">PRODUCT</p>
+          <ul className="mt-2 md:mt-8 ">
             <li className="mb-1 hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-[#7d7d7d] transition-all duration-200 font-medium">
               AI Talent Discovery
             </li>
@@ -36,8 +36,8 @@ const Footer = () => {
           </ul>
         </section>
         <section className="w-[260px]">
-          <p className="font-geist-mono text-[16px]">USE CASES</p>
-          <ul className="mt-8 ">
+          <p className="font-geist-mono  text-[16px]">USE CASES</p>
+          <ul className="mt-2 md:mt-8 ">
             <li className="mb-1 hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-[#7d7d7d] transition-all duration-200 font-medium">
               Hiring Software Engineer
             </li>
@@ -65,8 +65,8 @@ const Footer = () => {
           </ul>
         </section>
         <section className="w-[220px]">
-          <p className="font-geist-mono text-[16px]">ACCOUNT & UTILITY</p>
-          <ul className="mt-8 ">
+          <p className="font-geist-mono  text-[16px]">ACCOUNT & UTILITY</p>
+          <ul className="mt-2 md:mt-8 ">
             <li className="mb-1 hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-[#7d7d7d] transition-all duration-200 font-medium">
               Terms & Conditions
             </li>
@@ -91,8 +91,8 @@ const Footer = () => {
           </ul>
         </section>
         <section className="w-[220px]">
-          <p className="font-geist-mono text-[16px]">COMPANY</p>
-          <ul className="mt-8 mb-8">
+          <p className="font-geist-mono  text-[16px]">COMPANY</p>
+          <ul className="mt-2 md:mt-8 mb-8">
             <li className="mb-1 hover:ml-2 hover:cursor-pointer hover:list-disc hover:text-[#7d7d7d] transition-all duration-200 font-medium">
               About Us
             </li>
@@ -136,7 +136,7 @@ const Footer = () => {
           </nav>
         </section>
       </nav>
-      <nav className="flex justify-between">
+      <nav className="flex justify-between z-60 relative flex-col md:flex-row gap-3 md:gap-0">
         <p className="text-[12px] font-medium">
           © 2025 Spotted AI. All rights reserved.
         </p>

@@ -3,14 +3,21 @@ import React from "react";
 
 const Testimonials = () => {
   return (
-    <section className="mt-35 mb-50 px-15   flex gap-2 flex-col ">
-      <p className="font-geist-mono mb-1">/ TESTIMONIALS</p>
-      <p className="font-semibold text-[40px] leading-[46px] mb-10">
-        Recruiting Teams Love Using Spotted AI - And It Shows
-      </p>
-      <nav className="grid grid-cols-3 gap-1.5">
-        <div className=" flex flex-col justify-between px-5 py-6 h-[470px] rounded-[10px] bg-[#f7f7f7]">
-          <p className="text-[20px] font-semibold">
+    <section className="mt-35 mb-20 md:mb-50 px-5 md:px-15   flex gap-2 flex-col ">
+      <div className="pr-5 md:pr-0">
+        <p className="font-geist-mono mb-3 md:mb-1">/ TESTIMONIALS</p>
+        <p className="hidden md:block font-semibold text-[40px] leading-[46px] mb-10">
+          Recruiting Teams Love Using Spotted AI - And It Shows
+        </p>
+        <p className="md:hidden  font-semibold text-[40px] leading-[46px] mb-10">
+          Recruiting Teams Love Using Spotted AI And It Shows
+        </p>
+      </div>
+
+      {/* <nav className="grid grid-cols-3 gap-1.5 "> */}
+      <nav className="flex overflow-x-auto flex-nowrap gap-3 md:grid md:grid-cols-3 md:overflow-visible">
+        <div className="flex-shrink-0 w-[314px] md:w-auto  flex flex-col justify-between px-5 py-6 md:h-[470px] rounded-[10px] bg-[#f7f7f7]">
+          <p className=" text-[18px] md:text-[20px] font-semibold mb-5 md:mb-0">
             What truly sets Spotted AI apart is the learning loop. We reviewed
             just five relevant profiles, and the system instantly understood our
             exact hiring preferences. From there, shortlisting and outreach ran
@@ -29,8 +36,8 @@ const Testimonials = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-between px-5 py-6 h-[470px] rounded-[10px] bg-[#f7f7f7]">
-          <p className="text-[20px] font-semibold">
+        <div className="flex-shrink-0 w-[314px] md:w-auto flex flex-col justify-between px-5 py-6 md:h-[470px] rounded-[10px] bg-[#f7f7f7]">
+          <p className=" text-[18px] md:text-[20px] font-semibold mb-5 md:mb-0">
             Outreach used to be our biggest bottleneck. Spotted AI now books
             qualified interviews on our calendar automatically, with better
             response rates than manual campaigns
@@ -50,8 +57,8 @@ const Testimonials = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-between px-5 py-6 h-[470px] rounded-[10px] bg-[#f7f7f7]">
-          <p className="text-[20px] font-semibold">
+        <div className="flex-shrink-0 w-[314px] md:w-auto flex flex-col justify-between px-5 py-6 md:h-[470px] rounded-[10px] bg-[#f7f7f7]">
+          <p className=" text-[18px] md:text-[20px] font-semibold mb-5 md:mb-0">
             Spotted AI reduced our time-to-shortlist from days to under two
             hours. What used to take a full recruiting sprint now happens in a
             single afternoon.

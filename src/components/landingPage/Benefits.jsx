@@ -3,15 +3,15 @@ import Image from "next/image";
 
 const Benefits = () => {
   return (
-    <section className="px-15 flex gap-2 items-center flex-col ">
+    <section className="md:px-15 px-5 flex gap-2 items-center flex-col ">
       <p className="font-geist-mono">/ BENEFITS</p>
-      <p className="font-semibold text-[40px] leading-[46px] w-[50%] text-center mb-4">
+      <p className="font-semibold text-[34px] md:text-[40px] leading-[46px] md:w-[50%] text-center mb-7 md:mb-4">
         Why High-Performing Recruiting Teams Choose Spotted AI
       </p>
       {/* cards */}
-      <nav className="flex gap-2 w-[896px]">
+      <nav className="flex flex-col md:flex-row md:gap-2 gap-8">
         <div className="flex flex-col w-[294px]">
-          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-5 rounded-[6px]">
+          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-2 md:mb-5 rounded-[6px]">
             <Image
               src="/LandingPage/benefit1.svg"
               alt="benefit"
@@ -26,7 +26,7 @@ const Benefits = () => {
           </p>
         </div>
         <div className="flex flex-col w-[294px]">
-          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-5 rounded-[6px]">
+          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-2 md:mb-5 rounded-[6px]">
             <Image
               src="/LandingPage/benefit2.svg"
               alt="benefit"
@@ -41,7 +41,7 @@ const Benefits = () => {
           </p>
         </div>
         <div className="flex flex-col w-[294px]">
-          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-5 rounded-[6px] ">
+          <div className="flex justify-center items-center bg-[#fafafa] h-[294px] mb-2 md:mb-5 rounded-[6px] ">
             <Image
               src="/LandingPage/benefit3.svg"
               alt="benefit"

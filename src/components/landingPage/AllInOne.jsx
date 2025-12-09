@@ -2,24 +2,27 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+
 const AllInOne = () => {
   const router = useRouter();
   return (
-    <div className=" mb-20 mx-15   flex gap-2 flex-col bg-black text-white rounded-[4px]">
-      <main className="px-10 flex justify-between items-center py-8">
-        <section className="w-[654px]">
-          <p className="font-geist-mono mb-1">/ ALL-IN-ONE</p>
-          <p className="font-semibold text-[40px] ">
+    <div className=" mb-20 mx-5 md:mx-15   flex gap-2 flex-col bg-black text-white rounded-[8px] md:rounded-[4px]">
+      <main className="mx-4 md:px-10 flex justify-between items-center flex-col md:flex-row pt-4 md:pt-0  py-8 ">
+        <section className="md:w-[654px]">
+          <p className="font-geist-mono mb-3 md:mb-1 text-[14px] md:text-[16px] ">
+            / ALL-IN-ONE
+          </p>
+          <p className="font-semibold text-[40px] leading-[46px] ">
             Accelerate Hiring Performance.
           </p>
-          <p className="font-semibold text-[40px] leading-[46px] mb-5">
+          <p className="font-semibold text-[40px] leading-[46px] mb-8 md:mb-5">
             Book Better Candidates Faster.
           </p>
-          <p className="text-[16px] mb-5 text-[#cccccc]">
+          <p className="text-[16px] mb-15 md:mb-5 text-[#cccccc]">
             Spotted AI automates sourcing, shortlisting, and outreach so your
             team spends time interviewing-not searching for candidates.
           </p>
-          <div className="flex w-[270px] gap-3">
+          <div className="flex flex-col md:flex-row md:w-[270px] gap-3">
             <button
               className="w-full text-center py-3 border border-white bg-white hover:bg-gray-50 rounded-[6px] hover:cursor-pointer text-black text-[14px] font-medium "
               onClick={() => router.push("/signup")}
@@ -38,7 +41,7 @@ const AllInOne = () => {
             </button>
           </div>
         </section>
-        <section>
+        <section className="hidden md:flex">
           <Image
             src="/LandingPage/abstract.svg"
             width={20}
