@@ -46,7 +46,7 @@ const FAQ = () => {
     },
   ];
   return (
-    <div className=" mb-50 px-15 flex gap-20">
+    <div className=" mb-50 px-15 flex gap-20 bg-white">
       <section className="w-[66%] flex flex-col justify-between">
         <nav>
           <p className="font-geist-mono mb-2">/ FAQ</p>
@@ -59,7 +59,7 @@ const FAQ = () => {
           </p>
         </nav>
         <nav
-          className="relative hover:cursor-pointer"
+          className="relative hover:cursor-pointer "
           onClick={() => setShow(true)}
         >
           <Image

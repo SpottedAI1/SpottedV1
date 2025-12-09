@@ -107,10 +107,10 @@ const Page = () => {
         <Hero />
       </div>
       <LogoScroll />
-      <div ref={benefitsRef}>
+      <div ref={benefitsRef} className="scroll-mt-28">
         <Benefits />
       </div>
-      <div ref={featuresRef} className="w-full flex justify-center">
+      <div ref={featuresRef} className="w-full flex justify-center scroll-mt-5">
         <Features />
       </div>
       <WhySpotted />
@@ -119,7 +119,7 @@ const Page = () => {
         <Pricing />
       </div>
       <Blog />
-      <div ref={faqRef}>
+      <div ref={faqRef} className="scroll-mt-25">
         <FAQ />
       </div>
 
