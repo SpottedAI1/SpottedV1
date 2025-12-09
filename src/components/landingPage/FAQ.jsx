@@ -46,14 +46,14 @@ const FAQ = () => {
     },
   ];
   return (
-    <div className=" mb-50 px-15 flex gap-20 bg-white">
-      <section className="w-[66%] flex flex-col justify-between">
+    <div className=" mb-25 md:mb-50 px-5 md:px-15 flex gap-10 md:gap-20 bg-white flex-col md:flex-row">
+      <section className=" md:w-[66%] flex flex-col justify-between">
         <nav>
-          <p className="font-geist-mono mb-2">/ FAQ</p>
+          <p className="font-geist-mono mb-5 md:mb-2">/ FAQ</p>
           <p className="font-semibold text-[40px] leading-[46px] mb-5">
             Everything You Need to Know - Upfront
           </p>
-          <p className="text-[16px]">
+          <p className="text-[16px] mb-10 md:mb-0">
             From setup to support and pricing, here are quick answer to the most
             common questions we get from teams considering Spotted AI
           </p>

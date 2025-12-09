@@ -4,9 +4,9 @@ import React from "react";
 const Features = () => {
   return (
     // px-15
-    <section className=" mt-20 w-[90%]  flex gap-2 flex-col ">
+    <section className="mt-20 px-5 md:px-15 flex gap-2 flex-col ">
       <p className="font-geist-mono">/ FEATURES</p>
-      <nav className="flex justify-between items-center mb-4">
+      <nav className="flex flex-col md:flex-row md:justify-between gap-4 md:gap-0 md:items-center mb-4">
         <p className="font-semibold text-[40px] leading-[46px] mb-4">
           All-In-One AI Hiring Platform
         </p>
@@ -28,7 +28,7 @@ const Features = () => {
           All Features
         </button>
       </nav>
-      <nav className="grid grid-cols-[1fr_1fr_1fr] grid-rows-2 w-full gap-2">
+      <nav className="grid md:grid-cols-[1fr_1fr_1fr] md:grid-rows-2 grid-cols-[1fr] w-full gap-4 md:gap-2">
         <div className="row-span-3  ">
           <Image
             src="/LandingPage/man.svg"

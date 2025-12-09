@@ -12,7 +12,7 @@ import Pricing from "@/components/landingPage/Pricing";
 import Testimonials from "@/components/landingPage/Testimonials";
 import WhySpotted from "@/components/landingPage/WhySpotted";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
@@ -22,6 +22,11 @@ const Page = () => {
   const featuresRef = useRef(null);
   const pricingRef = useRef(null);
   const faqRef = useRef(null);
+  const [show, setShow] = useState(false);
+
+  const controlVisibility = () => {
+    setShow(!show);
+  };
 
   const scrollToTarget = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,7 +37,8 @@ const Page = () => {
     <div className="min-h-screen w-full flex flex-col bg-white text-gray-900 font-geist ">
       {/* NAVIGATION BAR */}
       <section
-        className="sticky top-0 bg-white/70 backdrop-blur-md z-50 px-18 pt-5 flex  items-center pb-4
+        className="sticky top-0 bg-white/70 backdrop-blur-md z-50 px-5 md:px-11 pt-5 flex  items-center justify-between pb-4
+        border-b border-[#f2f2f2] md:border-none
       "
       >
         {/* logo */}
@@ -42,10 +48,10 @@ const Page = () => {
           height={160}
           alt="logo"
           onClick={() => scrollToTarget(heroRef)}
-          className="mr-[28%]"
+          className=""
         />
         {/* navigation */}
-        <nav className="hidden md:flex w-[18%]  gap-4 text-[#222222] text-[15px] mr-[20%]">
+        <nav className="hidden md:flex  gap-4 text-[#222222] text-[15px] ">
           <p
             className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
             onClick={() => scrollToTarget(benefitsRef)}
@@ -71,10 +77,18 @@ const Page = () => {
             FAQ
           </p>
         </nav>
+        <nav className="flex md:hidden">
+          <Image
+            src="/LandingPage/hamburger.svg"
+            alt="hamburger menu icon"
+            width={24}
+            height={24}
+          />
+        </nav>
         {/* action buttons */}
-        <nav className="flex gap-2 w-[24%]">
+        <nav className="hidden md:flex gap-2 ">
           <button
-            className="w-[50%] text-center  py-[3%] border border-[#f2f2f2] hover:bg-gray-50 rounded-[6px] hover:cursor-pointer "
+            className="text-center px-5 py-2 border border-[#f2f2f2] hover:bg-gray-50 rounded-[6px] hover:cursor-pointer "
             onClick={() => router.push("/signin")}
           >
             Sign in
@@ -84,7 +98,7 @@ const Page = () => {
           </button> */}
           <button
             className="  
-              w-[50%] py-[3%] text-center
+              px-5 py-2 text-center
               bg-black text-white 
               border border-black 
               rounded-[6px]
