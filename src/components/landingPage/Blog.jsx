@@ -1,7 +1,9 @@
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Blog = () => {
+  const router = useRouter();
   return (
     <div className="mt-45 mb-25 md:mb-50 px-5 md:px-15   flex gap-2 flex-col  ">
       <p className="font-geist-mono mb-1">/ BLOG</p>
@@ -23,6 +25,7 @@ const Blog = () => {
                   
                   hover:shadow-[4px_4px_0px_#000]
                   hover: cursor-pointer"
+          onClick={() => router.push("/blogs")}
         >
           All Posts
         </button>
