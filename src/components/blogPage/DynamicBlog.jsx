@@ -1,21 +1,6 @@
 import React from "react";
 
-const DynamicBlog = () => {
-  const props = {
-    title: "test blog",
-    slug: "",
-    except: "short summar",
-    content: "full blog body",
-    "image link":
-      "https://drive.google.com/file/d/1V1rRBkCZed0he3cl08AL4cZ7R8JL82au/view?usp=sharing",
-    date: "2025-03-25",
-    category: "Product updates",
-    seo_title: "",
-    seo_description: "",
-    location: "",
-    Published: "yes",
-  };
-
+const DynamicBlog = ({ props }) => {
   return (
     <div className=" rounded-md ">
       <nav className="bg-[#f7f7f7] overflow-hidden hover:cursor-pointer">
