@@ -6,7 +6,7 @@ import Footer from "@/components/landingPage/Footer";
 import NavBar from "@/components/NavBar";
 import React, { useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [active, setActive] = useState("All");
   const tabs = [
     "All",
@@ -63,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
