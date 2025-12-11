@@ -206,6 +206,7 @@ const Page = () => {
       </div>
       <AllInOne />
       <Footer />
+      {/* Frost effect at the bottom */}
       <div className="fixed bottom-0 left-0 right-0 h-40 pointer-events-none z-40">
         <div
           className="w-full h-full backdrop-blur-xl"
