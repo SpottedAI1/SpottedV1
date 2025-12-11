@@ -2,10 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { API_ENDPOINTS } from "@/utils/api";
+import { useAuth } from "@/context/AuthContext";
+import FirebaseGoogleSignIn from "@/components/FirebaseGoogleSignIn";
 
 export default function SigninPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,28 +24,10 @@ export default function SigninPage() {
     setError("");
 
     try {
-      const response = await fetch(API_ENDPOINTS.LOGIN, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store token in localStorage
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        // Existing users go directly to dashboard without onboarding
-        router.push("/after-onboarding");
-      } else {
-        setError(data.message || "Invalid credentials");
-      }
+      await login(email, password);
+      router.push("/after-onboarding");
     } catch (err) {
-      setError("Network error. Please try again.");
-      console.error(err);
+      setError(err.message || "Invalid credentials");
     } finally {
       setLoading(false);
     }
@@ -137,6 +121,18 @@ export default function SigninPage() {
           >
             {loading ? "Signing in..." : "Sign in"}
           </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 mt-6">
+            <div className="flex-1 h-[1px] bg-gray-300"></div>
+            <span className="text-xs text-gray-500">OR</span>
+            <div className="flex-1 h-[1px] bg-gray-300"></div>
+          </div>
+
+          {/* Google Sign In */}
+          <div className="mt-4">
+            <FirebaseGoogleSignIn isSignUp={false} />
+          </div>
 
           {/* Terms */}
           <p className="text-center text-[11px] text-[#6b7280] mt-4 leading-relaxed">

@@ -2,10 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { API_ENDPOINTS } from "@/utils/api";
+import { useAuth } from "@/context/AuthContext";
+import FirebaseGoogleSignIn from "@/components/FirebaseGoogleSignIn";
 
 export default function EmailSignupPage() {
   const router = useRouter();
+  const { signup } = useAuth();
   const [showPassword, setShowPassword] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,41 +25,16 @@ export default function EmailSignupPage() {
     setError("");
 
     try {
-      const response = await fetch(API_ENDPOINTS.REGISTER, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // After successful signup, log them in
-        const loginResponse = await fetch(API_ENDPOINTS.LOGIN, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const loginData = await loginResponse.json();
-        if (loginResponse.ok) {
-          localStorage.setItem("token", loginData.token);
-          localStorage.setItem("user", JSON.stringify(loginData.user));
-          // Mark as new user (first-time signup) to show onboarding
-          localStorage.setItem("isNewUser", "true");
-          // New users go to onboarding to add organization
-          router.push("/onboarding1");
-        }
-      } else {
-        setError(data.message || "Signup failed. Please try again.");
-      }
+      // Sign up with Firebase
+      await signup(email, password, name);
+      
+      // Mark as new user for onboarding
+      localStorage.setItem("isNewUser", "true");
+      
+      // Redirect to onboarding
+      router.push("/onboarding1");
     } catch (err) {
-      setError("Network error. Please try again.");
-      console.error(err);
+      setError(err.message || "Failed to create account. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -156,8 +133,20 @@ export default function EmailSignupPage() {
             disabled={loading}
             className="w-full mt-6 bg-black text-white py-3 rounded-lg text-sm font-medium hover:opacity-90 hover:cursor-pointer disabled:opacity-50"
           >
-            {loading ? "Creating account..." : "Continue"}
+            {loading ? "Creating account..." : "Create account"}
           </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 mt-6">
+            <div className="flex-1 h-[1px] bg-gray-300"></div>
+            <span className="text-xs text-gray-500">OR</span>
+            <div className="flex-1 h-[1px] bg-gray-300"></div>
+          </div>
+
+          {/* Google Sign In */}
+          <div className="mt-4">
+            <FirebaseGoogleSignIn isSignUp={true} />
+          </div>
 
           {/* Terms */}
           <p className="text-center text-[12px] text-[#6b7280] mt-4 leading-relaxed">

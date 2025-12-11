@@ -11,8 +11,12 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5000',
-    process.env.FRONTEND_URL || 'http://localhost:3000'
-  ]
+    'http://127.0.0.1:3000',
+    'https://spotted-v1.vercel.app',
+    'https://spottedv1-2.onrender.com',
+    process.env.FRONTEND_URL || 'https://spotted-v1.vercel.app'
+  ],
+  credentials: true
 }));
 app.use(express.json());
 

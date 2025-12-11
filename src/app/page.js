@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import FirebaseGoogleSignIn from "@/components/FirebaseGoogleSignIn";
+
 export default function SignupPage() {
   const router = useRouter();
   return (
@@ -14,17 +16,16 @@ export default function SignupPage() {
         <h1 className="font-sans font-semibold text-[18px] text-gray-800 mb-[20px]">
           Get started for free
         </h1>
-        <button className="w-full border-[2px] border-[#cfcfcf] rounded-[4px] py-[10px] text-[13px]  flex items-center justify-center gap-2 mb-[8px] hover:cursor-pointer font-semibold text-gray-800">
-          <Image src="/google.svg" alt="google" width={18} height={18} />
-          Continue with Google
-        </button>
+        <div className="w-full mb-[8px]">
+          <FirebaseGoogleSignIn isSignUp={true} />
+        </div>
         <button
           onClick={() => {
             router.push("/email-signup");
           }}
           className="w-full border-[2px] border-[#cfcfcf] rounded-[4px] py-[10px] text-[13px]  flex items-center justify-center gap-2 mb-[18px] hover:cursor-pointer font-semibold text-gray-800"
         >
-          <Image src="/email.svg" alt="google" width={18} height={18} />
+          <Image src="/email.svg" alt="email" width={18} height={18} />
           Continue with Email
         </button>
         <nav className="text-[#4d4d4d] text-[10px] flex gap-1">
