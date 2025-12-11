@@ -38,4 +38,6 @@ export default function SignupPage() {
       </main>
     </div>
   );
-}
+};
+
+export default Page;
