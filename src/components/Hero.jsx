@@ -1,10 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const Hero = () => {
   const router = useRouter();
   const [prompt, setPrompt] = useState();
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const user = localStorage.getItem("user");
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        setUserName(userData.name || "User");
+      } catch (err) {
+        console.error("Error parsing user data:", err);
+      }
+    }
+  }, []);
 
   const onSearch = () => {
     console.log("Hero onSearch called with prompt:", prompt);
@@ -23,7 +37,7 @@ const Hero = () => {
       <div className="flex flex-col w-full max-w-5xl">
         <div>
           <h1 className="font-semibold text-3xl text-gray-900">
-            Hi Krish, please describe the profile you're looking for.
+            Hi {userName}, please describe the profile you're looking for.
           </h1>
           <h2 className="text-gray-500 mt-1">
             Find exactly who you're looking for, in seconds.

@@ -2,8 +2,78 @@
 import ReferralSelect from "@/components/ReferralSources";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { API_ENDPOINTS } from "@/utils/api";
+
 export default function OnboardingPage3() {
   const router = useRouter();
+  const [selectedReferral, setSelectedReferral] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Only allow onboarding for new users (first-time signup)
+    const isNewUser = localStorage.getItem("isNewUser");
+    if (!isNewUser) {
+      // If not a new user, redirect to dashboard
+      router.push("/after-onboarding");
+    }
+  }, [router]);
+
+  const handleFinish = async () => {
+    setLoading(true);
+    try {
+      // Get all onboarding data
+      const onboardingData = JSON.parse(localStorage.getItem("onboardingData") || "{}");
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+      console.log("Onboarding data:", onboardingData);
+      console.log("User data:", user);
+
+      // userId might be stored as 'id' or '_id'
+      const userId = user.id || user._id;
+
+      if (!userId) {
+        alert("Error: User ID not found. Please sign up again.");
+        return;
+      }
+
+      if (!onboardingData.organizationName) {
+        alert("Error: Organization name not found. Please complete onboarding again.");
+        return;
+      }
+
+      // Send onboarding data to backend
+      const response = await fetch(API_ENDPOINTS.ONBOARDING, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          organizationName: onboardingData.organizationName,
+          role: onboardingData.role,
+          referralSource: selectedReferral || null
+        }),
+      });
+
+      const responseData = await response.json();
+      console.log("Backend response:", responseData);
+
+      if (response.ok) {
+        // Clear onboarding data and flag
+        localStorage.removeItem("isNewUser");
+        localStorage.removeItem("onboardingData");
+        router.push("/after-onboarding");
+      } else {
+        alert("Error saving onboarding details: " + (responseData.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
   // const options = [
   //   "LinkedIn",
   //   "Twitter",
@@ -37,15 +107,7 @@ export default function OnboardingPage3() {
           <label className="text-[14px] font-semibold">
             How did you hear about Spotted AI? Select all that apply.
           </label>
-          {/* <input
-            type="text"
-            placeholder="Krish's Workspace"
-            className="w-full mt-4 px-[10px] py-2 border-[1px] border-[#e5e7eb] rounded-[6px] outline-none focus:border-transparent
-            bg-[#f9fafb]
-                focus:ring-2 focus:ring-black text-[14px] focus:bg-[#f9fafb] 
-                placeholder:text-gray-700"
-          /> */}
-          <ReferralSelect />
+          <ReferralSelect onSelect={setSelectedReferral} />
         </div>
         {/* buttons */}
         <div className="w-full flex justify-between items-center">
@@ -64,12 +126,11 @@ export default function OnboardingPage3() {
             <p>Back</p>
           </button>
           <button
-            onClick={() => {
-              router.push("/after-onboarding");
-            }}
-            className="w-[20%] mt-6 bg-black text-white py-2 px-4 rounded-[6px] text-sm font-medium hover:opacity-90 hover:cursor-pointer flex items-center justify-center gap-1 text-[13px]"
+            onClick={handleFinish}
+            disabled={loading}
+            className="w-[20%] mt-6 bg-black text-white py-2 px-4 rounded-[6px] text-sm font-medium hover:opacity-90 hover:cursor-pointer flex items-center justify-center gap-1 text-[13px] disabled:opacity-50"
           >
-            Finish
+            {loading ? "Finishing..." : "Finish"}
           </button>
         </div>
       </div>

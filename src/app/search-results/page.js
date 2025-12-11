@@ -3,10 +3,6 @@ import React, { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/SideBar";
 import { Suspense } from "react";
-import Image from "next/image";
-
-import { data } from "../mock/candidates";
-import CandidateProfile from "@/components/CandidateProfile";
 
 export default function PageWrapper() {
   return (
@@ -327,8 +323,8 @@ function SearchResultsPage() {
           location:
             candidate.location || candidate.city || "Location Not Specified",
           education:
-            candidate.education.degree ||
-            candidate.education.school ||
+            candidate.education ||
+            candidate.degree ||
             "Education Not Specified",
           skills:
             candidate.skills ||
@@ -378,26 +374,23 @@ function SearchResultsPage() {
         <div className="fixed left-0 top-0 h-full z-10">
           <SideBar />
         </div>
-        <div
-          className={`ml-[260px] min-h-screen pb-10 bg-white transition-all duration-200 
-  ${selectedCandidate ? "mr-[590px]" : "mr-0"}`}
-        >
+        <div className="ml-[260px] min-h-screen pb-20 bg-white">
           {/* Header Section */}
           <div className="p-6 border-b border-gray-200">
             <div className="mb-4">
-              <h1 className="text-lg text-[#374151] text-[16px] px-1.5 py-2 rounded-md leading-relaxed bg-[#f8fafc] border border-[#e2e8f0] w-full">
+              <h1 className="text-lg text-gray-800 leading-relaxed">
                 {searchQuery ||
                   "Senior Product Manager with 5+ years experience in B2B SaaS, preferably from Bangalore with strong analytics background and team leadership experience"}
               </h1>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 ">
+              <span className="text-sm text-gray-600">
                 {results.length} candidates found
               </span>
-              <div className="flex items-center gap-2 px-1.5 py-1 rounded-md border border-[#e5e7eb] bg-[#f8fafc]">
-                <span className="text-sm text-gray-600  ">Sort by:</span>
-                <select className="text-sm border-none bg-transparent text-gray-800 rounded-md focus:outline-none ">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600">Sort by:</span>
+                <select className="text-sm border-none bg-transparent text-gray-800 focus:outline-none">
                   <option>Relevance</option>
                   <option>Experience</option>
                   <option>Location</option>
@@ -410,8 +403,20 @@ function SearchResultsPage() {
           <div className="mx-6 mt-4 mb-6">
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center justify-between">
               <div className="flex items-center">
-                <Image src="/stars.svg" alt="star" width={24} height={24} />
-                <span className="text-purple-800 font-medium ml-2">
+                <svg
+                  className="w-5 h-5 text-purple-600 mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                  />
+                </svg>
+                <span className="text-purple-800 font-medium">
                   Let Spotted AI auto-reach out to candidates and schedule
                   interviews.
                 </span>
@@ -457,8 +462,7 @@ function SearchResultsPage() {
             )}
 
             <div className="space-y-4">
-              {/* pagination applied here */}
-              {paginatedResults.map((candidate) => {
+              {results.map((candidate) => {
                 const isUnlocked = unlockedCards.has(candidate.id);
                 const showLockedState = candidate.isLocked && !isUnlocked;
 
@@ -473,15 +477,17 @@ function SearchResultsPage() {
                         const candidateData = encodeURIComponent(
                           JSON.stringify(candidate)
                         );
-                        setSelectedCandidate(candidate);
+                        router.push(
+                          `/candidate/${candidate.id}?data=${candidateData}`
+                        );
                       }
                     }}
                   >
                     {/* Top Section - Avatar, Name, and Action Buttons */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-4 ">
+                      <div className="flex items-start gap-4">
                         {/* Avatar with verification */}
-                        {/* <div className="relative">
+                        <div className="relative">
                           <div
                             className={`w-16 h-16 rounded-full flex items-center justify-center font-medium text-lg ${
                               showLockedState
@@ -509,37 +515,53 @@ function SearchResultsPage() {
                               </svg>
                             </div>
                           )}
-                        </div> */}
+                        </div>
 
-                        {/* Box */}
-                        <div className="p-2 border rounded-[3px] border-[#d1d5db]"></div>
                         {/* Name and Role */}
                         <div className="flex-1">
                           {showLockedState ? (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 mb-1">
                               <div className="h-5 bg-gray-300 rounded w-40"></div>
-                              <Image
-                                src="/linkedIn.svg"
-                                alt="LinkedIn"
-                                width={18}
-                                height={18}
-                              />
+                              <svg
+                                className="w-4 h-4 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                />
+                              </svg>
                             </div>
                           ) : (
-                            <div className="flex items-center gap-2 ">
-                              <h3 className="text-[18px] font-bold text-gray-900">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="text-xl font-bold text-gray-900">
                                 {candidate.name}
                               </h3>
                               {candidate.isVerified && (
-                                <Image
-                                  src="/linkedIn.svg"
-                                  alt="LinkedIn"
-                                  width={18}
-                                  height={18}
-                                />
+                                <svg
+                                  className="w-4 h-4 text-green-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
                               )}
                             </div>
                           )}
+                          <p className="text-gray-600 text-sm">
+                            {candidate.position && `${candidate.position}, `}
+                            {candidate.company}
+                          </p>
                         </div>
                       </div>
 
@@ -649,36 +671,43 @@ function SearchResultsPage() {
                                   );
                                 }
                               }}
-                              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] rounded-lg hover:bg-gray-200 border border-gray-300 hover:cursor-pointer"
+                              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
                             >
-                              <Image
-                                src="/heart.svg"
-                                alt="heart"
-                                width={18}
-                                height={18}
-                              />
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                />
+                              </svg>
                               Shortlist
                             </button>
                             <button
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-2 px-2.5  py-2 text-sm font-medium text-gray-700 bg-[#f3f4f6] border border-gray-300 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+                              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                             >
-                              <Image
-                                src="/eye.svg"
-                                alt="eye"
-                                width={18}
-                                height={18}
-                                onClick={() => {
-                                  if (!showLockedState) {
-                                    const candidateData = encodeURIComponent(
-                                      JSON.stringify(candidate)
-                                    );
-                                    setSelectedCandidate(candidate);
-                                  }
-                                }}
-                              />
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              Schedule Call
                             </button>
-                            {/* <button
+                            <button
                               onClick={(e) => e.stopPropagation()}
                               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                             >
@@ -696,37 +725,61 @@ function SearchResultsPage() {
                                 />
                               </svg>
                               Add Notes
-                            </button> */}
+                            </button>
                           </>
                         )}
                       </div>
                     </div>
 
                     {/* Middle Section - Key Details */}
-                    <div className="space-y-3 text-sm text-[#6b7280] mb-4">
+                    <div className="space-y-3 text-sm text-gray-600 mb-4">
                       <div className="flex items-center gap-2">
-                        <Image
-                          src="work.svg"
-                          alt="work"
-                          width={16}
-                          height={16}
-                        />
-                        {candidate.position} - {candidate.location}
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                        {candidate.location}
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Image
-                          src="/education.svg"
-                          alt="edu"
-                          width={16}
-                          height={16}
-                        />
-                        {candidate.education.degree +
-                          " - " +
-                          candidate.education.school}
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 14l9-5-9-5-9 5 9 5z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                          />
+                        </svg>
+                        {candidate.education}
                       </div>
 
-                      {/* <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -741,41 +794,92 @@ function SearchResultsPage() {
                           />
                         </svg>
                         Skills: {candidate.skills}
-                      </div> */}
+                      </div>
 
                       <div className="flex items-center gap-2">
-                        <Image
-                          src="mailGray.svg"
-                          alt="email"
-                          width={16}
-                          height={16}
-                        />
-                        {showLockedState ? (
-                          <div className="h-4 bg-gray-300 rounded w-32"></div>
-                        ) : (
-                          candidate.email
-                        )}
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                        {candidate.experience}
                       </div>
                     </div>
 
                     {/* Bottom Section - Contact Information */}
                     <div className="flex flex-wrap gap-6 text-sm">
+                      <div className="flex items-center gap-1 text-gray-700">
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        Resume
+                      </div>
+                      <div className="flex items-center gap-1 text-blue-600">
+                        <svg
+                          className="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                        LinkedIn
+                      </div>
                       {showLockedState ? (
                         <>
-                          <div className="flex items-center gap-1 text-[#374151]">
-                            <Image
-                              src="/stars.svg"
-                              alt="star"
-                              width={16}
-                              height={16}
-                              className="mr-1"
-                            />
-                            {"This candidate is a " + candidate.experience}
+                          <div className="flex items-center gap-1 text-gray-400">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                              />
+                            </svg>
+                            Email (locked)
+                          </div>
+                          <div className="flex items-center gap-1 text-gray-400">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                              />
+                            </svg>
+                            Phone (locked)
                           </div>
                         </>
                       ) : (
                         <>
-                          {/* <div className="flex items-center gap-1 text-gray-700">
+                          <div className="flex items-center gap-1 text-gray-700">
                             <svg
                               className="w-4 h-4"
                               fill="none"
@@ -806,16 +910,6 @@ function SearchResultsPage() {
                               />
                             </svg>
                             {candidate.phone}
-                          </div> */}
-                          <div className="flex items-center gap-1 text-[#374151]">
-                            <Image
-                              src="/stars.svg"
-                              alt="star"
-                              width={16}
-                              height={16}
-                              className="mr-1"
-                            />
-                            {candidate.name + " is a " + candidate.experience}
                           </div>
                         </>
                       )}
@@ -826,49 +920,8 @@ function SearchResultsPage() {
             </div>
           </div>
 
-          {/* paginatin ui */}
-          <div className="flex items-center justify-center gap-2 mt-8 mb-10">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className={`px-4 py-1 border rounded-md ${
-                currentPage === 1
-                  ? "bg-gray-200 text-gray-800 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-100 text-gray-800"
-              }`}
-            >
-              Prev
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
-              <button
-                key={num}
-                onClick={() => setCurrentPage(num)}
-                className={`px-3 py-1 border rounded-md ${
-                  currentPage === num
-                    ? "bg-gray-800 text-white"
-                    : "bg-white hover:bg-gray-100 text-gray-600"
-                }`}
-              >
-                {num}
-              </button>
-            ))}
-
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className={`px-4 py-1 border rounded-md ${
-                currentPage === totalPages
-                  ? "bg-gray-200 text-gray-800 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-100 text-gray-800"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-
           {/* Sticky Footer */}
-          {/* <div className="fixed bottom-0 left-[260px] right-0 bg-gray-800 text-white px-6 py-4 flex items-center justify-between z-30">
+          <div className="fixed bottom-0 left-[260px] right-0 bg-gray-800 text-white px-6 py-4 flex items-center justify-between z-30">
             <span className="text-sm">You're on the free trial.</span>
             <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-black">
               Upgrade Now
@@ -886,7 +939,7 @@ function SearchResultsPage() {
                 />
               </svg>
             </button>
-          </div> */}
+          </div>
         </div>
       </main>
       {selectedCandidate && (
