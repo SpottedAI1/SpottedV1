@@ -6,13 +6,7 @@ const DynamicBlog = ({ props }) => {
       <nav className="bg-[#f7f7f7] overflow-hidden hover:cursor-pointer">
         <div className="overflow-hidden rounded-[8px] md:h-[314px]">
           <img
-            src={
-              props["image link"].includes("drive.google.com")
-                ? `https://drive.google.com/uc?export=view&id=${
-                    props["image link"].split("/d/")[1].split("/")[0]
-                  }`
-                : props["image link"]
-            }
+            src={props["image link"]}
             alt="image"
             className="w-full h-auto"
           />
