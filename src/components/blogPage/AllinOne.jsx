@@ -6,7 +6,7 @@ const AllinOne = () => {
   const router = useRouter();
   return (
     <div className="">
-      <section className="relative w-full  rounded-md overflow-hidden h-[630px] md:h-[600px]">
+      <section className="relative w-full  rounded-md overflow-hidden h-[630px] md:h-[600px] ">
         <Image
           src="/BlogPage/background.png"
           alt="bg"

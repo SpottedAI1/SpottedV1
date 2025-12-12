@@ -9,7 +9,7 @@ import React from "react";
 const Page = () => {
   return (
     <div className="min-h-screen w-full flex flex-col bg-white text-gray-900 font-geist ">
-      <div className="sticky top-0">
+      <div className="sticky top-0 z-[100]">
         <NavBar />
       </div>
       <section className="px-5 md:px-15 flex flex-col justify-center items-center gap-5 mb-5">
