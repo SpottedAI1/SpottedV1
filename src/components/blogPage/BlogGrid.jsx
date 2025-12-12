@@ -9,6 +9,13 @@ async function getBlogs() {
   );
   return res.json();
 }
+// async function getBlogs() {
+//   const res = await fetch(
+//     "https://opensheet.elk.sh/1tLWbtPhhNqDqPLiUsP9uO40-Th5LYfmyWlEg2hLeNIc/Sheet1",
+//     { next: { revalidate: 60 } }
+//   );
+//   return res.json();
+// }
 
 const BlogGrid = async () => {
   const blogs = await getBlogs();
