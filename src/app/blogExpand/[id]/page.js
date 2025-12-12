@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-export const dynamicParams = true;
 
 import AllinOne from "@/components/blogPage/AllinOne";
 import Footer from "@/components/landingPage/Footer";
@@ -11,6 +10,13 @@ async function getBlogs() {
     "https://opensheet.elk.sh/1NT1P7u_cn1inozqsONz7akkKo6LCNUO4uguU2zathn4/sheet1"
   );
   return res.json();
+}
+
+export async function generateStaticParams() {
+  const blogs = await getBlogs();
+  return blogs.map((blog) => ({
+    id: blog.id.toString(),
+  }));
 }
 
 export default async function BlogExpand({ params }) {
