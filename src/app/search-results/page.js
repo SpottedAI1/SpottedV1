@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/SideBar";
+import CandidateProfile from "@/components/CandidateProfile";
 import { Suspense } from "react";
 
 export default function PageWrapper() {
@@ -20,6 +21,10 @@ function SearchResultsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [unlockedCards, setUnlockedCards] = useState(new Set());
 
+  //For pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+
   useEffect(() => {
     const query = searchParams.get("q") || "";
     setSearchQuery(query);
@@ -29,8 +34,16 @@ function SearchResultsPage() {
     }
   }, [searchParams]);
 
+  //during production set this to false to call the real APi
+  const USE_MOCK_DATA = true;
+
   const fetchResults = async (query) => {
     setLoading(true);
+    if (USE_MOCK_DATA) {
+      setResults(data);
+      return setLoading(false);
+    }
+
     try {
       const qs = encodeURIComponent(query);
       const res = await fetch(
@@ -347,6 +360,15 @@ function SearchResultsPage() {
     setUnlockedCards((prev) => new Set([...prev, cardId]));
   };
 
+  //pagination
+  const totalPages = Math.ceil(results.length / itemsPerPage);
+  const paginatedResults = results.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  //candidate profile
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
   return (
     <div className="h-screen bg-white overflow-hidden">
       <main className="h-full bg-white overflow-y-auto overflow-x-hidden">
@@ -921,6 +943,12 @@ function SearchResultsPage() {
           </div>
         </div>
       </main>
+      {selectedCandidate && (
+        <CandidateProfile
+          props={selectedCandidate}
+          onClose={() => setSelectedCandidate(null)}
+        />
+      )}
     </div>
   );
 }
