@@ -9,10 +9,6 @@ export default function AgentDetailsPage() {
   const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchAgentDetails();
-  }, [params.id]);
-
   const fetchAgentDetails = async () => {
     setLoading(true);
     try {

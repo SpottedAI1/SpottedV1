@@ -32,7 +32,7 @@ function SearchResultsPage() {
     if (query) {
       fetchResults(query);
     }
-  }, [searchParams]);
+  }, [searchParams, fetchResults]);
 
   //during production set this to false to call the real APi
   const USE_MOCK_DATA = true;

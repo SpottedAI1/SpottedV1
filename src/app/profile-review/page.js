@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import SideBar from "@/components/SideBar";
 import Image from "next/image";
@@ -198,7 +198,7 @@ export default function ProfileReviewPage() {
     
     // Fallback to mock data if no webhook data
     setProfiles(mockProfiles);
-  }, []);
+  }, [mockProfiles]);
 
   const currentProfile = profiles[currentProfileIndex];
 
