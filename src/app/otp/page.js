@@ -1,11 +1,11 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import LogoSec from "@/components/LogoSec";
 import { API_ENDPOINTS } from "@/utils/api";
 
-export default function OTPPage() {
+function OTPPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -195,5 +195,13 @@ export default function OTPPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OTPPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <OTPPageContent />
+    </Suspense>
   );
 }
