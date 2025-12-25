@@ -22,6 +22,7 @@ const Page = () => {
   const featuresRef = useRef(null);
   const pricingRef = useRef(null);
   const faqRef = useRef(null);
+  const blogRef = useRef(null);
   const [show, setShow] = useState(false);
   const [navigation, setNavigation] = useState(false);
 
@@ -35,6 +36,7 @@ const Page = () => {
 
   const scrollToTarget = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
+   viewNavigation();
   };
 
   const router = useRouter();
@@ -74,6 +76,12 @@ const Page = () => {
             onClick={() => scrollToTarget(pricingRef)}
           >
             Pricing
+          </p>
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(blogRef)}
+          >
+            Blog
           </p>
           <p
             className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
@@ -148,6 +156,12 @@ const Page = () => {
           </p>
           <p
             className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
+            onClick={() => scrollToTarget(blogRef)}
+          >
+            Blog
+          </p>
+          <p
+            className="hover:text-[#909090] transition-colors duration-300 hover:cursor-pointer"
             onClick={() => scrollToTarget(faqRef)}
           >
             FAQ
@@ -200,7 +214,9 @@ const Page = () => {
       <div ref={pricingRef}>
         <Pricing />
       </div>
-      <Blog />
+      <div ref={blogRef} className="scroll-mb-100">
+        <Blog />
+      </div>
       <div ref={faqRef} className="scroll-mt-25">
         <FAQ />
       </div>
