@@ -20,7 +20,7 @@ const DynamicBlog = ({ props }) => {
         <div className="px-3 pb-2 flex-1 flex flex-col">
           <p className="font-semibold text-[20px] mt-5 mb-3">{props.title}</p>
 
-          <p className="text-medium text-[14px] text-[#636363] mb-8">
+          <p className="line-clamp-3 text-medium text-[14px] text-[#636363] mb-8">
             {props.except}
           </p>
 
